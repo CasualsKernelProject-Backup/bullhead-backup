@@ -5163,21 +5163,12 @@ static int smbchg_hw_init(struct smbchg_chip *chip)
 		}
 	}
 
-	/* disable APSD */
-	if (chip->disable_apsd) {
-		rc = smbchg_sec_masked_write(chip,
-					chip->usb_chgpth_base + CHGPTH_APSD_CFG,
-					APSD_EN_BIT, 0);
-		if (rc < 0) {
-			dev_err(chip->dev, "Couldn't disable APSD rc=%d\n", rc);
-			return rc;
-		}
-	}
-
-	/* set AICL threshold according to battery max voltage */
-	rc = smbchg_sec_masked_write(chip, chip->dc_chgpth_base + AICL_CFG2,
-				AICL_THRESHOLD_5V,
-				chip->vfloat_mv > AICL_MIN_THR ? 1 : 0);
+	/*
+	 * force using current from the register i.e. ignore auto
+	 * power source detect (APSD) mA ratings
+	 */
+	rc = smbchg_masked_write(chip, chip->usb_chgpth_base + CMD_IL,
+			USE_REGISTER_FOR_CURRENT, USE_REGISTER_FOR_CURRENT);
 	if (rc < 0) {
 		dev_err(chip->dev, "Couldn't set AICL threshold rc=%d\n", rc);
 		return rc;
