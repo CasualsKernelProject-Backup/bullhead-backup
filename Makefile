@@ -402,7 +402,8 @@ KBUILD_CFLAGS   += -Wno-trigraphs -Wno-unused-label -Wno-array-bounds -Wno-memse
                    -Wno-unused-function -Wno-declaration-after-statement \
                    -Wno-unused-variable -Wno-parentheses -Wno-maybe-uninitialized \
                    -Wno-misleading-indentation -Wno-bool-compare -Wno-int-conversion \
-                   -Wno-discarded-qualifiers -Wno-tautological-compare -Wno-incompatible-pointer-types
+                   -Wno-discarded-qualifiers -Wno-tautological-compare -Wno-incompatible-pointer-types \
+                   -Wno-error=maybe-uninitialized
 
 KBUILD_AFLAGS_KERNEL := $(ABYSS_FLAGS)
 KBUILD_CFLAGS_KERNEL := $(ABYSS_FLAGS)
